@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <button onclick="send()">Click</button>
+    <br/>
+    <button onclick='document.getElementsByTagName("textarea")[0].value = &#39;{"action": "add", "data": ""}&#39;'>Exemple1</button>
+    <button onclick='document.getElementsByTagName("textarea")[0].value = &#39;{"action": "ModuleLoad", "data": {"module_name": "competitor_prices"}}&#39;'>ReloadCP</button>
+    <br/>
+    <textarea name="Text" cols="80" rows="3">{"action": "ModuleLoad", "data": {"module_name": "competitor_prices"}}</textarea>
+    <p id="answer"></p>
+    <script>
+     async function send(){
+         let response = await fetch("./", {
+            method: "POST",
+            body: document.getElementsByTagName("textarea")[0].value,
+            headers: {
+            "Content-type": "application/json; charset=UTF-8"
+            }
+         });
+         if (response.ok) {
+             let v = await response.json();
+             document.getElementById("answer").innerText = JSON.stringify(v, null, 2);
+         }
+         else {
+             document.getElementById("answer").innerText = "Ошибка";
+         }
+     }
+    </script>
+</body>
+</html>
