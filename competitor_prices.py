@@ -15,8 +15,9 @@ class CompetitorPrices:
     @action("CompetitorPrices_GetPrices")
     # {} -> [{"GUID":ProductGUID,"medium_cost":100.00}, ...]
     def get_prices(cls, data):
-        table = cls.DB.get_all_prices()
-        return [{"GUID": row[0], "cost": row[1]} for row in table]
+        #table = cls.DB.get_all_prices()
+        #return [{"GUID": row[0], "cost": row[1]} for row in table]
+        return {"function": "CompetitorPrices_SetProducts"}
 
     @classmethod
     @action("CompetitorPrices_SetProducts")
@@ -27,7 +28,7 @@ class CompetitorPrices:
     @classmethod
     @module_start
     def start(cls, OldData = None):
-        cls.DB = db_actions.DbActions()
+        #cls.DB = db_actions.DbActions()
 
     @classmethod
     @module_stop
