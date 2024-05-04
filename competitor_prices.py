@@ -29,6 +29,7 @@ class CompetitorPrices:
     @module_start
     def start(cls, OldData = None):
         #cls.DB = db_actions.DbActions()
+        pass
 
     @classmethod
     @module_stop
