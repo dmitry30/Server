@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <button onclick="send()">Click</button>
+    <br/>
+    <script>
+    Massd = ['{"action": "CompetitorPrices_GetPrices", "data": ""}',
+        '{"action": "ModuleLoad", "data": {"module_name": "competitor_prices"}}',
+        '{"action": "CompetitorPrices_SetProducts", "data": [{"GUID": "test1", "products": [{"GUID": "test1", "URL": "url"}]}]}',
+        '{"action": "CompetitorPrices_RC_Redirect", "data": {"action": "CP_VI_GetPrices", "data": {}}}',
+        '{"action": "ModuleLoad", "data": {"module_names": ["Competitor_prices.db_actions","Competitor_prices.rc_client","competitor_prices"]}}']
+    </script>
+    <button onclick='document.getElementsByTagName("textarea")[0].value = Massd[0];'>CP_GetProducts</button>
+    <button onclick='document.getElementsByTagName("textarea")[0].value = Massd[1];'>ReloadCP</button>
+    <button onclick='document.getElementsByTagName("textarea")[0].value = Massd[4];'>ReloadAllCP</button>
+    <button onclick='document.getElementsByTagName("textarea")[0].value = Massd[2];'>CP_SetProducts</button>
+    <button onclick='document.getElementsByTagName("textarea")[0].value = Massd[3];'>CP_VI_GetPrices</button>
+    <br/>
+    <textarea name="Text" cols="80" rows="3">{"action": "ModuleLoad", "data": {"module_name": "competitor_prices"}}</textarea>
+    <p id="answer"></p>
+    <script>
+     async function send(){
+         document.getElementById("answer").innerText = "";
+         let response = await fetch("./", {
+            method: "POST",
+            body: document.getElementsByTagName("textarea")[0].value,
+            headers: {
+            "Content-type": "application/json; charset=UTF-8"
+            }
+         });
+         if (response.ok) {
+             let v = await response.json();
+             document.getElementById("answer").innerText = JSON.stringify(v, null, 2).replaceAll("\\n", "\n");
+         }
+         else {
+             document.getElementById("answer").innerText = "Ошибка";
+         }
+     }
+    </script>
+</body>
+</html>
